@@ -1,0 +1,60 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container mt-5" style="background-color: #f0f2f5;">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <h2 class="text-center mb-4">Productos</h2>
+            <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#addProductModal">
+                <i class="bi bi-plus-circle"></i>
+            </button>
+            <div class="p-4 bg-white shadow-lg" style="border-radius: 0.5rem;">
+                <div class="table-responsive">
+                    <table id="productsTable" class="table table-striped table-bordered bg-white">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Cantidad</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($productos as $producto)
+                            <tr>
+                                <td class="text-center">
+                                    <img src="{{ $producto->imagen ? asset('storage/' . $producto->imagen) : asset('storage/productos/default.png') }}" alt="Imagen del producto" style="width: 50px; height: auto; cursor: pointer;" onclick="showImageModal('{{ $producto->imagen ? asset('storage/' . $producto->imagen) : asset('storage/productos/default.png') }}')">
+                                </td>
+                                <td>{{ $producto->nombre }}</td>
+                                <td>{{ $producto->descripcion }}</td>
+                                <td>${{ number_format($producto->precio, 2) }}</td>
+                                <td>{{ $producto->cantidad }}</td>
+                                <td>
+                                    <button onclick="editProduct({{ json_encode($producto) }})" class="btn btn-sm btn-primary" style="width: 75px;">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-button" data-id="{{ $producto->id }}" data-url="{{ route('productos.destroy', $producto->id) }}" style="width: 75px;">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-warning movement-button" data-id="{{ $producto->id }}" style="width: 75px;">
+                                        <i class="bi bi-arrow-left-right"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@include('productos.modals.add_product')
+@include('productos.modals.image_viewer')
+@include('productos.modals.movement_modal')
+@vite(['resources/js/productos.js'])
+
+@endsection
