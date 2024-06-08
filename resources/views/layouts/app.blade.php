@@ -26,7 +26,7 @@
     <div id="app" class="min-h-screen bg-gray-100">
         <nav class="bg-white shadow">
             <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-                <a class="text-gray-800 text-lg font-semibold" href="{{ url('/') }}">
+                <a class="text-gray-800 text-lg font-semibold" href="{{ url('/productos') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <div class="flex items-center">
