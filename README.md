@@ -21,7 +21,3 @@ Descripción de cómo instalar y correr el proyecto.
 3. Configurar el entorno: Copiar `.env.example` a `.env` y modificar los valores.
 4. Generar clave de la aplicación: `php artisan key:generate`.
 5. Correr el servidor: `php artisan serve`.
-
-## Contribuir
-
-Información sobre cómo contribuir al proyecto.
