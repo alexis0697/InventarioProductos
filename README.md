@@ -1,7 +1,3 @@
-# Nombre del Proyecto
-
-Descripción breve del proyecto.
-
 ## Tecnologías Utilizadas
 
 - HTML/CSS
