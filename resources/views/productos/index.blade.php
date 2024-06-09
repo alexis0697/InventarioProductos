@@ -32,15 +32,28 @@
                                 <td>${{ number_format($producto->precio, 2) }}</td>
                                 <td>{{ $producto->cantidad }}</td>
                                 <td>
-                                    <button onclick="editProduct({{ json_encode($producto) }})" class="btn btn-sm btn-primary" style="width: 75px;">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-button" data-id="{{ $producto->id }}" data-url="{{ route('productos.destroy', $producto->id) }}" style="width: 75px;">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-warning movement-button" data-id="{{ $producto->id }}" style="width: 75px;">
-                                        <i class="bi bi-arrow-left-right"></i>
-                                    </button>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton{{ $producto->id }}" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Acciones
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton{{ $producto->id }}">
+                                            <li>
+                                                <a class="dropdown-item" href="#" onclick="editProduct({{ json_encode($producto) }})">
+                                                    <i class="bi bi-pencil-square"></i> Editar
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item delete-button" href="#" data-id="{{ $producto->id }}" data-url="{{ route('productos.destroy', $producto->id) }}">
+                                                    <i class="bi bi-trash"></i> Eliminar
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item movement-button" href="#" data-id="{{ $producto->id }}">
+                                                    <i class="bi bi-arrow-left-right"></i> Movimiento
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach

@@ -29,14 +29,34 @@ $(document).ready(function() {
     $(window).resize(function() {
         table.columns.adjust().responsive.recalc();
     });
+
+    // Configurar botones de eliminar
+    $(document).on('click', '.delete-button', function() {
+        const productId = $(this).data('id');
+        const deleteUrl = $(this).data('url');
+        window.deleteProduct(productId, deleteUrl);
+    });
+
+    // Configurar botones de movimiento de inventario
+    $(document).on('click', '.movement-button', function() {
+        const productId = $(this).data('id');
+        window.openMovementModal(productId);
+    });
+
+    // Reiniciar campos del formulario al cerrar el modal
+    $('#addProductModal').on('hidden.bs.modal', function() {
+        $('#productForm').trigger("reset");
+        document.getElementById('formMethod').value = 'POST';
+        $('#productForm').find('input[name="_method"]').remove();
+    });
 });
 
 // Función para guardar o actualizar un producto
 window.saveProduct = function() {
     var form = document.getElementById('productForm');
     var formData = new FormData(form);
-    var url = form.getAttribute('action'); 
-    var method = document.getElementById('formMethod').value; 
+    var url = form.getAttribute('action');
+    var method = document.getElementById('formMethod').value;
 
     // Log FormData para depuración
     for (var pair of formData.entries()) {
@@ -46,7 +66,7 @@ window.saveProduct = function() {
     // Ejecutar solicitud AJAX para guardar o actualizar el producto
     $.ajax({
         url: url,
-        type: 'POST', // Usar POST y manejar PUT a través del campo _method
+        type: 'POST', 
         data: formData,
         contentType: false,
         processData: false,
@@ -107,7 +127,7 @@ window.showImageModal = function(imageUrl) {
 };
 
 // Función para eliminar un producto
-function deleteProduct(productId, deleteUrl) {
+window.deleteProduct = function(productId, deleteUrl) {
     Swal.fire({
         title: '¿Estás seguro?',
         text: "¡No podrás revertir esto!",
@@ -145,28 +165,6 @@ function deleteProduct(productId, deleteUrl) {
         }
     });
 }
-
-// Evento para manejar acciones al cargar la página
-document.addEventListener('DOMContentLoaded', function() {
-    // Configurar botones de eliminar
-    const deleteButtons = document.querySelectorAll('.delete-button');
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const productId = this.getAttribute('data-id');
-            const deleteUrl = this.getAttribute('data-url');
-            deleteProduct(productId, deleteUrl);
-        });
-    });
-
-    // Configurar botones de movimiento de inventario
-    const movementButtons = document.querySelectorAll('.movement-button');
-    movementButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const productId = this.getAttribute('data-id');
-            openMovementModal(productId);
-        });
-    });
-});
 
 // Función para abrir el modal de movimientos de inventario
 window.openMovementModal = function(productId) {
